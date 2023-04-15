@@ -4,6 +4,13 @@
 
 **Python + PostgreSQL + Adminer**
 
+```
+docker compose up --build
+
+docker compose up
+docker compose down
+```
+
 Достуы, их нужно скопировать в созданый файл `.env`:
 ```
 DJ_ADM_L='admin'
@@ -78,6 +85,9 @@ python manage.py collectstatic
 ```
 
 ```
+pip install psycopg2
+```
+```
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -90,13 +100,19 @@ DATABASES = {
 }
 ```
 
+
 ```
-python manage.py makemigrations
-python manage.py migrate
+docker exec dj_treemenu-web-1 python manage.py makemigrations
+docker exec dj_treemenu-web-1 python manage.py migrate
+
+docker exec dj_treemenu-web-1 python manage.py createsuperuser
+```
+
+```
+docker exec -it dj_treemenu-web-1 bash
 
 python manage.py createsuperuser
 ```
-
 
 ## Решение
 
