@@ -2,10 +2,17 @@
 
 # DJ TREE MENU | UPTRADER 
 
-Доступ в админ-панель:
+**Python + PostgreSQL + Adminer**
+
+Достуы, их нужно скопировать в созданый файл `.env`:
 ```
-admin
-admin
+DJ_ADM_L='admin'
+DJ_ADM_P='admin'
+
+DB_HOST='db'
+DB_NAME='postgres'
+DB_USER='postgres'
+DB_PASSWORD='password'
 ```
 
 ## Задача
@@ -53,6 +60,43 @@ admin
 `README.md` - файл с описанием проекта, возможно, написанный на языке разметки Markdown.
 
 `requirements.txt` - файл со списком зависимостей Python, которые нужны для запуска проекта.
+
+
+## Конфигурирование
+
+```
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+```
+```
+python manage.py collectstatic
+```
+
+```
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv("DB_NAME"),
+        'USER': os.getenv("DB_USER"),
+        'PASSWORD': os.getenv("DB_PASSWORD"),
+        'HOST': os.getenv("DB_HOST"),
+        'PORT': '5432',
+    }
+}
+```
+
+```
+python manage.py makemigrations
+python manage.py migrate
+
+python manage.py createsuperuser
+```
+
 
 ## Решение
 
