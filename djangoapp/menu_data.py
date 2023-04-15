@@ -17,6 +17,6 @@ menu_item2 = MenuItem.objects.create(
 # Создание третьей записи, которая будет дочерней для первой
 menu_item3 = MenuItem.objects.create(
     name='Contact',
-    parent=menu_item1,
+    parent=None,
     url='/contact/'
 )

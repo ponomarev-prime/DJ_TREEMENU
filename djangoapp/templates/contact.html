@@ -1,0 +1,15 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Contact{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'treemenu/css/style.css' %}">
+</head>
+<body>
+    <header>
+        {% block header %}
+        <h1>Contact</h1>
+        {% endblock %}
+    </header>
+</html>

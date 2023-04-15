@@ -2,7 +2,7 @@
 
 # DJ TREE MENU | UPTRADER 
 
-**Python + PostgreSQL + Adminer**
+**Django + PostgreSQL + Adminer**
 
 ```
 docker compose up --build
@@ -71,6 +71,7 @@ DB_PASSWORD='password'
 
 ## Конфигурирование
 
+### STATIC
 ```
 STATIC_URL = '/static/'
 
@@ -83,7 +84,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 ```
 python manage.py collectstatic
 ```
-
+### PostgreSQL
 ```
 pip install psycopg2
 ```
@@ -100,6 +101,13 @@ DATABASES = {
 }
 ```
 
+```
+docker compose ps
+NAME                    IMAGE               COMMAND                  SERVICE             CREATED              STATUS              PORTS
+dj_treemenu-adminer-1   adminer             "entrypoint.sh php -…"   adminer             About a minute ago   Up About a minute   0.0.0.0:8080->8080/tcp
+dj_treemenu-db-1        postgres:latest     "docker-entrypoint.s…"   db                  About a minute ago   Up About a minute   0.0.0.0:5432->5432/tcp
+dj_treemenu-web-1       dj_treemenu-web     "python manage.py ru…"   web                 About a minute ago   Up About a minute   0.0.0.0:8000->8000/tcp
+```
 
 ```
 docker exec dj_treemenu-web-1 python manage.py makemigrations
@@ -113,6 +121,55 @@ docker exec -it dj_treemenu-web-1 bash
 
 python manage.py createsuperuser
 ```
+
+### Добавление записей в БД 
+
+```
+PS C:\Users\ponom\Documents\CODE\DJ_TREEMENU> docker exec -it dj_treemenu-web-1 bash
+root@3bc255dec306:/code# ls
+__pycache__  djangoapp  manage.py  menu_data.py  static  templates  treemenu  venv
+root@3bc255dec306:/code# python -V
+Python 3.11.3
+root@3bc255dec306:/code# python manage.py shell
+```
+`menu_data.py`:
+```
+from treemenu.models import MenuItem
+
+# Создание первой записи
+menu_item1 = MenuItem.objects.create(
+    name='Home',
+    parent=None,
+    url='/'
+)
+
+# Создание второй записи
+menu_item2 = MenuItem.objects.create(
+    name='About',
+    parent=None,
+    url='/about/'
+)
+
+# Создание третьей записи, которая будет дочерней для первой
+menu_item3 = MenuItem.objects.create(
+    name='Contact',
+    parent=None,
+    url='/contact/'
+)
+```
+### Добавление 404
+
+`views.py`:
+```
+def page_not_found_view(request, exception):
+    return render(request, '404.html', status=404)
+```
+`urls.py`:
+```
+handler404 = "treemenu.views.page_not_found_view"
+```
+
+`djangoapp/templates/404.html`
 
 ## Решение
 

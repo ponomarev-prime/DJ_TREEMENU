@@ -3,9 +3,14 @@ from treemenu.models import MenuItem
 from .forms import MenuItemForm
 
 
-# Create your views here.
-def index_page(request):
-    return render(request, "index.html")
+def page_not_found_view(request, exception):
+    return render(request, '404.html', status=404)
+
+def about_page(request):
+    return render(request, "about.html")
+
+def contact_page(request):
+    return render(request, "contact.html")
 
 def menu_list(request):
     menus = MenuItem.objects.all()

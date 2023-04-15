@@ -16,17 +16,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from treemenu.views import index_page
-from treemenu.views import menu_detail
-from treemenu.views import menu_list, menu_detail, menu_edit
+from treemenu.views import menu_list, menu_detail, menu_edit, about_page, contact_page, page_not_found_view
 
 
 app_name = 'treemenu'
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    #path("", index_page, name='home'),
     path("", menu_list, name='menu_list'),
     path("details/<int:menu_id>/", menu_detail, name='menu_detail'),
     path("edit/<int:menu_id>/", menu_edit, name='menu_edit'),
+    path("about/", about_page, name='about'),
+    path("contact/", contact_page, name='contact')
 ]
+
+handler404 = "treemenu.views.page_not_found_view"
