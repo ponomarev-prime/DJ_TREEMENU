@@ -17,9 +17,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from treemenu.views import index_page
+from treemenu.views import menu_detail
+from treemenu.views import menu_list, menu_detail, menu_edit
 
+
+app_name = 'treemenu'
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", index_page),
+    #path("", index_page, name='home'),
+    path("", menu_list, name='menu_list'),
+    path("details/<int:menu_id>/", menu_detail, name='menu_detail'),
+    path("edit/<int:menu_id>/", menu_edit, name='menu_edit'),
 ]

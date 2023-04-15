@@ -1,0 +1,38 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}DJ TREE MENU{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'treemenu/css/style.css' %}">
+</head>
+<body>
+    <header>
+        {% block header %}
+        <h1>DJ TREE MENU</h1>
+        {% endblock %}
+    </header>
+
+    <nav>
+        {% block nav %}
+        <ul>
+            <li><a href="{% url 'menu_list' %}">Menu List</a></li>
+            <li><a href="{% url 'menu_detail' menu_id=1 %}">Menu Detail</a></li>
+            <li><a href="{% url 'menu_edit' menu_id=2 %}">Menu Edit</a></li>
+        </ul>
+        {% endblock %}
+    </nav>
+
+    <main>
+        {% block content %}
+        <p>Page content goes here.</p>
+        {% endblock %}
+    </main>
+
+    <footer>
+        {% block footer %}
+        <p>Copyright &copy; {{ year }} DJ TREE MENU</p>
+        {% endblock %}
+    </footer>
+</body>
+</html>

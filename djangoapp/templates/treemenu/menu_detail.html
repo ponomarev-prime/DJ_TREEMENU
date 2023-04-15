@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>{{ menu.name }}</h1>
+  <p>{{ menu.url }}</p>
+  {% if menu.children.all %}
+    <ul>
+      {% for child in menu.children.all %}
+        <li><a href="{% url 'menu_detail' menu_id=child.id %}">{{ child.name }}</a></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endblock %}
