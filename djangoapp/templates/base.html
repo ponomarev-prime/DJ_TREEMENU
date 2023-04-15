@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load treemenu_tags %} <!-- загружаем наш Template Tag -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,9 +16,8 @@
     <nav>
         {% block nav %}
         <ul>
-            <li><a href="{% url 'menu_list' %}">Menu List</a></li>
-            <li><a href="{% url 'menu_detail' menu_id=1 %}">Menu Detail</a></li>
-            <li><a href="{% url 'menu_edit' menu_id=2 %}">Menu Edit</a></li>
+            <!-- Используем наш Template Tag menu_links и передаем список меню -->
+            {% menu_links menu_list %}
         </ul>
         {% endblock %}
     </nav>
