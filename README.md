@@ -197,6 +197,32 @@ handler404 = "treemenu.views.page_not_found_view"
 
 `djangoapp/templates/404.html`
 
+### PostgresSQL
+
+```
+docker exec -it dj_treemenu-db-1 bash
+```
+
+```
+root@11621eac194b:/# psql -U postgres -l
+                                                List of databases
+   Name    |  Owner   | Encoding |  Collate   |   Ctype    | ICU Locale | Locale Provider |   Access privileges
+-----------+----------+----------+------------+------------+------------+-----------------+-----------------------        
+ postgres  | postgres | UTF8     | en_US.utf8 | en_US.utf8 |            | libc            |
+ template0 | postgres | UTF8     | en_US.utf8 | en_US.utf8 |            | libc            | =c/postgres          +        
+           |          |          |            |            |            |                 | postgres=CTc/postgres
+ template1 | postgres | UTF8     | en_US.utf8 | en_US.utf8 |            | libc            | =c/postgres          +        
+           |          |          |            |            |            |                 | postgres=CTc/postgres
+(3 rows)
+```
+```
+root@11621eac194b:/# dropdb -U postgres postgres
+```
+```
+root@a9bceb527d59:/# createdb -U postgres postgres
+```
+
+
 ## Решение
 
 В моём случае в файле `base.html` есть вызов `{% menu_links menu_list %}` который отвечает за динамическую отрисовку меню. 

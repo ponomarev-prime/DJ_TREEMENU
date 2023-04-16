@@ -1,7 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from treemenu.models import MenuItem
-from .forms import MenuItemForm
+from treemenu.models import Menu
 
+
+def index_page(request):
+    return render(request, "index.html")
 
 def page_not_found_view(request, exception):
     return render(request, '404.html', status=404)
@@ -12,26 +14,13 @@ def about_page(request):
 def contact_page(request):
     return render(request, "contact.html")
 
-def menu_list(request):
-    menus = MenuItem.objects.all()
-    return render(request, 'treemenu/menu_list.html', {'menus': menus})
+def products_page(request):
+    return render(request, "products.html")
 
-def menu_detail(request, menu_id):
-    menu = get_object_or_404(MenuItem, pk=menu_id)
-    return render(request, 'treemenu/menu_detail.html', {'menu': menu, 'menu_id': menu_id})
-
-def menu_edit(request, menu_id=None):
-    if menu_id:
-        menu = get_object_or_404(MenuItem, pk=menu_id)
-    else:
-        menu = MenuItem()
-
-    if request.method == 'POST':
-        form = MenuItemForm(request.POST, instance=menu)
-        if form.is_valid():
-            menu = form.save()
-            return redirect('menu_detail', menu_id=menu.id)
-    else:
-        form = MenuItemForm(instance=menu)
-
-    return render(request, 'treemenu/edit_menu_item.html', {'form': form})
+def menu(request, menu_name):
+    menu = Menu.objects.get(name=menu_name)
+    items = menu.menuitem_set.all()
+    context = {
+        'items': items,
+    }
+    return render(request, 'treemenu/menu.html', context)
