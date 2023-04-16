@@ -20,6 +20,8 @@ DB_HOST='db'
 DB_NAME='postgres'
 DB_USER='postgres'
 DB_PASSWORD='password'
+
+SECRET_KEY="django_secret_key"
 ```
 
 ## Задача
@@ -43,7 +45,18 @@ DB_PASSWORD='password'
 
 При решении тестового задания у вас не должно возникнуть вопросов. Если появляются вопросы, вероятнее всего, у вас недостаточно знаний. Задание выложить на гитхаб.
 
+PS: задание можно найти в публичном доступе https://yandex.ru/q/pythontalk/12774643458/
 
+
+## Подготовка
+
+Таблица `MenuItem`:
+```
+id
+name
+parent 
+url
+```
 
 ## Струкутра
 
@@ -51,23 +64,31 @@ DB_PASSWORD='password'
 
 `treemenu` - приложение которое реализует древовидное меню
 
-
-Содержимаое корневой папки:
-
-`djangoapp` - директория с Django приложением
-
-`gitcontent` - директория с контентом для git, напримр для `README.md`
-
-`venv` - директория с Python Virtual Environment
-
-`.gitignore `- файл, который определяет, какие файлы и директории Git должен игнорировать при выполнении операций Git.
-
-`djangotest.py` - тестовый файл для Django приложения
-
-`README.md` - файл с описанием проекта, возможно, написанный на языке разметки Markdown.
-
-`requirements.txt` - файл со списком зависимостей Python, которые нужны для запуска проекта.
-
+```
+.
+├── .env
+├── Dockerfile
+├── README.md
+├── djangoapp
+│   ├── __pycache__
+│   ├── djangoapp
+│   ├── manage.py
+│   ├── menu_data.py
+│   ├── static
+│   ├── templates
+│   └── treemenu
+├── djangotest.py
+├── docker-compose.yml
+├── gitcontent
+│   └── djtreemenu.png
+├── postgres-data [error opening dir]
+├── requirements.txt
+└── venv
+    ├── Include
+    ├── Lib
+    ├── Scripts
+    └── pyvenv.cfg
+```
 
 ## Конфигурирование
 
@@ -84,6 +105,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 ```
 python manage.py collectstatic
 ```
+
+Добавил `djangoapp/static/treemenu/css/style.css`
 ### PostgreSQL
 ```
 pip install psycopg2
@@ -102,7 +125,7 @@ DATABASES = {
 ```
 
 ```
-docker compose ps
+$ docker compose ps
 NAME                    IMAGE               COMMAND                  SERVICE             CREATED              STATUS              PORTS
 dj_treemenu-adminer-1   adminer             "entrypoint.sh php -…"   adminer             About a minute ago   Up About a minute   0.0.0.0:8080->8080/tcp
 dj_treemenu-db-1        postgres:latest     "docker-entrypoint.s…"   db                  About a minute ago   Up About a minute   0.0.0.0:5432->5432/tcp
@@ -125,11 +148,14 @@ python manage.py createsuperuser
 ### Добавление записей в БД 
 
 ```
-PS C:\Users\ponom\Documents\CODE\DJ_TREEMENU> docker exec -it dj_treemenu-web-1 bash
+$ docker exec -it dj_treemenu-web-1 bash
+
 root@3bc255dec306:/code# ls
 __pycache__  djangoapp  manage.py  menu_data.py  static  templates  treemenu  venv
+
 root@3bc255dec306:/code# python -V
 Python 3.11.3
+
 root@3bc255dec306:/code# python manage.py shell
 ```
 `menu_data.py`:
@@ -157,7 +183,7 @@ menu_item3 = MenuItem.objects.create(
     url='/contact/'
 )
 ```
-### Добавление 404
+### Добавление кастомной 404
 
 `views.py`:
 ```

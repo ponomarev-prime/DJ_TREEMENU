@@ -1,5 +1,6 @@
 from django import template
 from django.urls import reverse
+from treemenu.models import MenuItem
 
 register = template.Library()
 
