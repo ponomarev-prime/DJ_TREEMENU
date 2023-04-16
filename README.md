@@ -4,14 +4,7 @@
 
 **Django + PostgreSQL + Adminer**
 
-```
-docker compose up --build
-
-docker compose up
-docker compose down
-```
-
-Достуы, их нужно скопировать в созданый файл `.env`:
+Переменные: 
 ```
 DJ_ADM_L='admin'
 DJ_ADM_P='admin'
@@ -23,6 +16,18 @@ DB_PASSWORD='password'
 
 SECRET_KEY="django_secret_key"
 ```
+их нужно скопировать в созданый файл `.env`:
+```
+touch .env
+```
+
+```
+docker compose up --build
+
+docker compose up
+docker compose down
+```
+
 
 ## Задача
 
